@@ -7,8 +7,8 @@ import {
   DrawerHeader,
   DrawerOverlay,
   Flex,
+  Spinner,
   Table,
-  TableCaption,
   TableContainer,
   Tbody,
   Td,
@@ -16,15 +16,9 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 
-import { useAppDispatch, useAppSelector } from '~/lib/app/hooks';
-import { selectedAppIdSelector, setSelectedAppId } from '~/lib/features/origin';
-import {
-  useLazyFetchAppOverviewQuery,
-  useLazyFetchAppUsersQuery,
-} from '~/lib/services/api';
-import type { App } from '~/lib/services/queries/tenant.queries';
+import { useAppDrawer } from '../hooks/useAppDrawer';
 
 export const AppDrawer = ({
   isOpen,
@@ -33,67 +27,48 @@ export const AppDrawer = ({
   isOpen: boolean;
   onClose: () => void;
 }) => {
-  const dispatch = useAppDispatch();
-  const selectedAppId = useAppSelector(selectedAppIdSelector);
-  const [fetchAppOverview] = useLazyFetchAppOverviewQuery();
-  const [fetchAppUsers] = useLazyFetchAppUsersQuery();
-  const [appOverview, setAppOVerview] = useState<App>();
-  const [appUsers, setAppUsers] = useState<Array<string>>([]);
-
-  useEffect(() => {
-    if (!selectedAppId) return;
-    const handle = async () => {
-      const { data } = await fetchAppOverview(selectedAppId);
-      setAppOVerview(data?.appOverview);
-    };
-    handle();
-  }, [selectedAppId, fetchAppOverview]);
-
-  useEffect(() => {
-    if (!selectedAppId) return;
-    const handle = async () => {
-      const { data } = await fetchAppUsers(selectedAppId);
-      setAppUsers(data?.appUsers ?? []);
-    };
-    handle();
-  }, [selectedAppId, fetchAppUsers]);
+  const { makeClose, appOverview, appUsers, isFetching } = useAppDrawer();
 
   const handleClose = useCallback(() => {
-    dispatch(setSelectedAppId(undefined));
+    makeClose();
     onClose();
-  }, [dispatch, onClose]);
+  }, [makeClose, onClose]);
 
   return (
-    <Drawer placement="right" onClose={handleClose} isOpen={isOpen}>
+    <Drawer placement="right" onClose={handleClose} isOpen={isOpen} size="lg">
       <DrawerOverlay />
       <DrawerContent>
         <DrawerHeader borderBottomWidth="1px">App Ovewview</DrawerHeader>
-        <DrawerBody>
-          <Alert status="info">
-            <Flex direction="column">
-              <AlertTitle>App Name: {appOverview?.appName}</AlertTitle>
-              <AlertTitle>Category: {appOverview?.category}</AlertTitle>
-              <AlertTitle>Users: {appUsers.length}</AlertTitle>
-              <AlertTitle>Connector: {appOverview?.appSources}</AlertTitle>
-            </Flex>
-          </Alert>
-          <TableContainer>
-            <Table variant="simple">
-              <Thead>
-                <Tr>
-                  <Th>Username</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {appUsers.map((appUser) => (
-                  <Tr key={appUser}>
-                    <Td>{appUser}</Td>
+        {isFetching ? (
+          <Spinner my={2} mx="auto" />
+        ) : (
+          <DrawerBody>
+            <Alert status="info">
+              <Flex direction="column">
+                <AlertTitle>App Name: {appOverview?.appName}</AlertTitle>
+                <AlertTitle>Category: {appOverview?.category}</AlertTitle>
+                <AlertTitle>Users: {appUsers.length}</AlertTitle>
+                <AlertTitle>Connector: {appOverview?.appSources}</AlertTitle>
+              </Flex>
+            </Alert>
+            <TableContainer>
+              <Table variant="simple">
+                <Thead>
+                  <Tr>
+                    <Th>Username</Th>
                   </Tr>
-                ))}
-              </Tbody>
-            </Table>
-          </TableContainer>
-        </DrawerBody>
+                </Thead>
+                <Tbody>
+                  {appUsers.map((appUser) => (
+                    <Tr key={appUser}>
+                      <Td>{appUser}</Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
+            </TableContainer>
+          </DrawerBody>
+        )}
       </DrawerContent>
     </Drawer>
   );
