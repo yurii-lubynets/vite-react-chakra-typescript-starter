@@ -9,10 +9,8 @@ export type App = {
 };
 
 type AppsResponse = {
-  data: {
-    appRows: Array<App>;
-    totalCount: number;
-  };
+  appRows: Array<App>;
+  totalCount: number;
 };
 
 const fetchApps = (builder: Builder) =>

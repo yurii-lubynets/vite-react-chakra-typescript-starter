@@ -51,22 +51,24 @@ export const AppDrawer = ({
                 <AlertTitle>Connector: {appOverview?.appSources}</AlertTitle>
               </Flex>
             </Alert>
-            <TableContainer>
-              <Table variant="simple">
-                <Thead>
-                  <Tr>
-                    <Th>Username</Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {appUsers.map((appUser) => (
-                    <Tr key={appUser}>
-                      <Td>{appUser}</Td>
+            {Boolean(appUsers.length) && (
+              <TableContainer>
+                <Table variant="simple">
+                  <Thead>
+                    <Tr>
+                      <Th>Username</Th>
                     </Tr>
-                  ))}
-                </Tbody>
-              </Table>
-            </TableContainer>
+                  </Thead>
+                  <Tbody>
+                    {appUsers.map((appUser) => (
+                      <Tr key={appUser}>
+                        <Td>{appUser}</Td>
+                      </Tr>
+                    ))}
+                  </Tbody>
+                </Table>
+              </TableContainer>
+            )}
           </DrawerBody>
         )}
       </DrawerContent>
