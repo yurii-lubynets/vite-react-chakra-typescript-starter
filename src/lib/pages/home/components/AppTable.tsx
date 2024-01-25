@@ -22,10 +22,13 @@ import type { App } from '~/lib/services/queries/app.queries';
 
 import { AppDrawer } from './AppDrawer';
 
+const DEFAULT_PAGE_SIZE = 25;
+const PAGE_SIZES = [DEFAULT_PAGE_SIZE, 50];
+
 export const AppTable = () => {
   const dispatch = useAppDispatch();
   const [fetchApps, { data, isLoading, isError }] = useFetchAppsMutation();
-  const [pageSize, setPageSize] = useState(25);
+  const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
   const [pageNumber, setPageNumber] = useState(0);
   const [totalItemsCount, setTotalItemsCount] = useState(0);
   const [tableData, setTableData] = useState<Array<App>>([]);
@@ -90,7 +93,7 @@ export const AppTable = () => {
         pageIndex={pageNumber}
         setPageIndex={setPageNumber}
         totalItemsCount={totalItemsCount}
-        pageSizeOptions={[25, 50]}
+        pageSizeOptions={PAGE_SIZES}
       />
       <AppDrawer isOpen={isOpen} onClose={onClose} />
     </>
