@@ -28,13 +28,15 @@
     "@fontsource/plus-jakarta-sans": "^5.0.18",
     "@reduxjs/toolkit": "^2.1.0",
     "framer-motion": "^10.16.15",
+    "http-proxy-middleware": "^2.0.6",
     "million": "2.6.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
     "react-icons": "^4.12.0",
     "react-redux": "^9.1.0",
-    "react-router-dom": "^6.20.1"
+    "react-router-dom": "^6.20.1",
+    "table-pagination-chakra-ui": "^1.1.5"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",

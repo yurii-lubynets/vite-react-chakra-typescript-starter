@@ -1,7 +1,7 @@
 import endpoints from '../endpoints';
 import type { Builder } from '../type';
 
-type App = {
+export type App = {
   appId: string;
   appName: string;
   appSources: Array<string>;
@@ -9,8 +9,10 @@ type App = {
 };
 
 type AppsResponse = {
-  appRows: Array<App>;
-  totalCount: number;
+  data: {
+    appRows: Array<App>;
+    totalCount: number;
+  };
 };
 
 const fetchApps = (builder: Builder) =>
@@ -24,7 +26,7 @@ const fetchApps = (builder: Builder) =>
     query: (params) => ({
       url: endpoints.getApps,
       method: 'PUT',
-      body: JSON.stringify(params),
+      body: params,
     }),
   });
 
