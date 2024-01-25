@@ -1,25 +1,53 @@
 import endpoints from '../endpoints';
 import type { Builder } from '../type';
 
-type Onboarding = { isOnboardingCompleted: boolean };
+type App = {
+  appId: string;
+  appName: string;
+  appSources: Array<string>;
+  category: string;
+};
 
-const fetchTenantOnboarding = (builder: Builder) =>
-  builder.query<Onboarding, void>({
-    query: () => endpoints.tenantOnboarding,
-    providesTags: ['tenantOnboarding'],
+type AppsResponse = {
+  appRows: Array<App>;
+  totalCount: number;
+};
+
+const fetchApps = (builder: Builder) =>
+  builder.mutation<
+    AppsResponse,
+    {
+      pageNumber: number;
+      pageSize: number;
+    }
+  >({
+    query: (params) => ({
+      url: endpoints.getApps,
+      method: 'PUT',
+      body: JSON.stringify(params),
+    }),
   });
 
-const updateTenantOnboarding = (builder: Builder) =>
-  builder.mutation<Onboarding, Onboarding>({
-    query: (onboarding) => ({
-      url: endpoints.tenantOnboarding,
-      method: 'PUT',
-      body: JSON.stringify(onboarding),
-    }),
-    invalidatesTags: ['tenantOnboarding'],
+type AppResponse = {
+  appOverview: App;
+};
+
+const fetchAppOverview = (builder: Builder) =>
+  builder.query<AppResponse, string>({
+    query: (appId) => `${endpoints.getAppOverview}/${appId}`,
+  });
+
+type AppUsersResponse = {
+  appUsers: ['appUsers', 'appUsers'];
+};
+
+const fetchAppUsers = (builder: Builder) =>
+  builder.query<AppUsersResponse, string>({
+    query: (appId) => `${endpoints.getAppUsers}/${appId}`,
   });
 
 export const tenantQueries = (builder: Builder) => ({
-  fetchTenantOnboarding: fetchTenantOnboarding(builder),
-  updateTenantOnboarding: updateTenantOnboarding(builder),
+  fetchApps: fetchApps(builder),
+  fetchAppOverview: fetchAppOverview(builder),
+  fetchAppUsers: fetchAppUsers(builder),
 });

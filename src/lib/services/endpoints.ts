@@ -1,11 +1,13 @@
-type TenantEndpoints = {
-  tenantOnboarding: '/api/tenant/onboarding';
+type ApiEndpoints = {
+  getApps: '/api/v1/app-service/get-apps';
+  getAppOverview: '/api/v1/app-service/get-app-overview/{appId}';
+  getAppUsers: '/api/v1/app-service/get-app-overview-users/{appId}';
 };
 
-type ApiEndpoints = TenantEndpoints;
-
 const endpoints: ApiEndpoints = {
-  tenantOnboarding: '/api/tenant/onboarding',
+  getApps: '/api/v1/app-service/get-apps',
+  getAppOverview: '/api/v1/app-service/get-app-overview/{appId}',
+  getAppUsers: '/api/v1/app-service/get-app-overview-users/{appId}',
 };
 
 export default endpoints;

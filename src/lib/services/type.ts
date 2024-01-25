@@ -14,6 +14,6 @@ export type BaseQueryType = BaseQueryFn<
   FetchBaseQueryMeta
 >;
 
-export const apiCacheTags = ['tenantOnboarding'] as const;
+export const apiCacheTags = [] as const;
 export type ApiCacheTag = (typeof apiCacheTags)[number];
 export type Builder = EndpointBuilder<BaseQueryType, ApiCacheTag, 'api'>;
