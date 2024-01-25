@@ -46,7 +46,7 @@ const fetchAppUsers = (builder: Builder) =>
     query: (appId) => `${endpoints.getAppUsers}/${appId}`,
   });
 
-export const tenantQueries = (builder: Builder) => ({
+export const appQueries = (builder: Builder) => ({
   fetchApps: fetchApps(builder),
   fetchAppOverview: fetchAppOverview(builder),
   fetchAppUsers: fetchAppUsers(builder),

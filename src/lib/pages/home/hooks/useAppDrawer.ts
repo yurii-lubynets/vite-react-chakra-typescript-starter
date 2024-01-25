@@ -6,7 +6,7 @@ import {
   useLazyFetchAppOverviewQuery,
   useLazyFetchAppUsersQuery,
 } from '~/lib/services/api';
-import type { App } from '~/lib/services/queries/tenant.queries';
+import type { App } from '~/lib/services/queries/app.queries';
 
 type UseAppDrawer = {
   makeClose: () => void;

@@ -18,7 +18,7 @@ import { PaginationTable } from 'table-pagination-chakra-ui';
 import { useAppDispatch } from '~/lib/app/hooks';
 import { setSelectedAppId } from '~/lib/features/origin';
 import { useFetchAppsMutation } from '~/lib/services/api';
-import type { App } from '~/lib/services/queries/tenant.queries';
+import type { App } from '~/lib/services/queries/app.queries';
 
 import { AppDrawer } from './AppDrawer';
 
