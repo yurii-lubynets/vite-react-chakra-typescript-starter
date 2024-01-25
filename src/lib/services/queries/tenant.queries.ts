@@ -40,7 +40,7 @@ const fetchAppOverview = (builder: Builder) =>
   });
 
 type AppUsersResponse = {
-  appUsers: ['appUsers', 'appUsers'];
+  appUsers: Array<string>;
 };
 
 const fetchAppUsers = (builder: Builder) =>

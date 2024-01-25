@@ -7,7 +7,10 @@ const RESET_TIMEOUT_IN_SEC = 30 * 60 * 60; // 30 minutes in seconds
 const API_URL = '/api';
 
 export const api = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: API_URL,
+    headers: { 'ngrok-skip-browser-warning': '69420' },
+  }),
   keepUnusedDataFor: RESET_TIMEOUT_IN_SEC,
   refetchOnMountOrArgChange: RESET_TIMEOUT_IN_SEC,
   endpoints: (builder) => ({
@@ -17,6 +20,6 @@ export const api = createApi({
 
 export const {
   useFetchAppsMutation,
-  useFetchAppOverviewQuery,
+  useLazyFetchAppOverviewQuery,
   useLazyFetchAppUsersQuery,
 } = api;

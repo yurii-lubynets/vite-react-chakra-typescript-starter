@@ -1,50 +1,32 @@
-import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 
 import type { RootState } from '../app/store';
 
-export type AppEnvironment =
-  | 'LOCAL'
-  | 'DEVELOPMENT'
-  | 'STAGING'
-  | 'TESTING'
-  | 'PRODUCTION';
-
 export interface OriginState {
-  isTest: boolean;
-  environment: AppEnvironment;
+  selectedAppId: string | undefined;
 }
 
 const initialState: OriginState = {
-  isTest: false,
-  environment: 'PRODUCTION',
+  selectedAppId: undefined,
 };
 
 const originSlice = createSlice({
   name: 'origin',
   initialState,
   reducers: {
-    setIsTest(state) {
+    setSelectedAppId(state, { payload }) {
       // eslint-disable-next-line no-param-reassign
-      state.isTest = true;
-    },
-    setEnvironment(state, { payload }: PayloadAction<AppEnvironment>) {
-      // eslint-disable-next-line no-param-reassign
-      state.environment = payload;
+      state.selectedAppId = payload;
     },
   },
 });
 
 export default originSlice.reducer;
 
-export const { setIsTest, setEnvironment } = originSlice.actions;
+export const { setSelectedAppId } = originSlice.actions;
 
 const originSelector = (state: RootState) => state.origin;
-export const isTestSelector = createSelector(
+export const selectedAppIdSelector = createSelector(
   originSelector,
-  (state) => state.isTest
-);
-export const environmentSelector = createSelector(
-  originSelector,
-  (state) => state.environment
+  (state) => state.selectedAppId
 );
