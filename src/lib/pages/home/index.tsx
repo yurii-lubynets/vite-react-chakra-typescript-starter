@@ -1,15 +1,7 @@
-import { Grid } from '@chakra-ui/react';
-
-import SomeImage from './components/SomeImage';
-import SomeText from './components/SomeText';
+import ReactionApp from './components/ReactionApp';
 
 const Home = () => {
-  return (
-    <Grid gap={4}>
-      <SomeText />
-      <SomeImage />
-    </Grid>
-  );
+  return <ReactionApp />;
 };
 
 export default Home;
