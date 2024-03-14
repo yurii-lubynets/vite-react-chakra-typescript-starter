@@ -1,11 +1,9 @@
-type TenantEndpoints = {
-  tenantOnboarding: '/api/tenant/onboarding';
+type ApiEndpoints = {
+  getUsers: '/users';
 };
 
-type ApiEndpoints = TenantEndpoints;
-
 const endpoints: ApiEndpoints = {
-  tenantOnboarding: '/api/tenant/onboarding',
+  getUsers: '/users',
 };
 
 export default endpoints;
